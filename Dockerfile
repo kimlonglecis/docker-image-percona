@@ -8,12 +8,14 @@ FROM percona
 # Install Run
 USER root
 RUN yum install cronie nano -y && \
-    yum update
-RUN mkhomedir_helper mysql && \
+    yum update -y && \
+    mkhomedir_helper mysql && \
     mkdir /www && \
     chown -R mysql:mysql /www
-
-
+RUN mkdir -p /etc/mysql/conf.d
+RUN mkdir -p /etc/mysql/percona-server.conf.d/
+#RUN touch /var/log/mysql/mysql_error.log /var/log/mysql/mysql_slow.log
+#RUN chown mysql:mysql /var/log/mysql/mysql_error.log /var/log/mysql/mysql_slow.log
 USER mysql
 WORKDIR /home/mysql/
 
